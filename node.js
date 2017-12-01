@@ -6,17 +6,17 @@ class Node {
   }
 
   add(value, comparator) {
-    comparator = comparator || this.defaultComparator;
+    comparator = comparator || Node.defaultComparator;
 
     if (comparator(this.value, value)) {
-      this.right = new Node(value);
-    } else {
       this.left = new Node(value);
+    } else {
+      this.right = new Node(value);
     }
   }
 
   defaultComparator(a, b) {
-    return a > b;
+    return a < b;
   }
 
   extractValues(node, result) {
