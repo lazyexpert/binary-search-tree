@@ -4,8 +4,8 @@ function sort(array, comparator) {
   }
 
   const middle = (array.length / 2) | 0;
-  const left = sort(array.slice(0, middle));
-  const right = sort(array.slice(middle, array.length));
+  const left = sort(array.slice(0, middle), comparator);
+  const right = sort(array.slice(middle, array.length), comparator);
 
   return merge(left, right, comparator);
 }

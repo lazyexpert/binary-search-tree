@@ -16,7 +16,7 @@ class BinarySearchTree {
     }
 
     const allNodes = Node.extractValues(this.head);
-    const comparator = this.comparator || Node.defaultComparator;
+    const comparator = this.comparator || Node.prototype.defaultComparator;
     const sorted = mergeSort(allNodes, comparator);
   }
 

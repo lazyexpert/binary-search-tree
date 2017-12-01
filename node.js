@@ -6,7 +6,7 @@ class Node {
   }
 
   add(value, comparator) {
-    comparator = comparator || Node.defaultComparator;
+    comparator = comparator || Node.prototype.defaultComparator;
 
     if (comparator(this.value, value)) {
       this.left = new Node(value);
