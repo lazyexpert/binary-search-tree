@@ -1,5 +1,7 @@
 const Node = require('./node');
 
+const mergeSort = require('./merge-sort');
+
 class BinarySearchTree {
   constructor() {
     this.head = null;
@@ -14,6 +16,7 @@ class BinarySearchTree {
     }
 
     const allNodes = Node.extractValues(this.head);
+    const sorted = mergeSort(allNodes);
   }
 
   hasValue(value) {

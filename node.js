@@ -6,7 +6,7 @@ class Node {
   }
 
   add(value, comparator) {
-    comparator = comparator || Node.defaultComparator;
+    comparator = comparator || this.defaultComparator;
 
     if (comparator(this.value, value)) {
       this.right = new Node(value);
@@ -15,19 +15,20 @@ class Node {
     }
   }
 
-  static defaultComparator(a, b) {
+  defaultComparator(a, b) {
     return a > b;
   }
 
-  static extractValues(node, result) {
+  extractValues(node, result) {
+    node = node || this;
     result = result || [];
     result.push(node.value);
     if (node.left) {
-      Node.extractValues(node.left, result);
+      this.extractValues(node.left, result);
     }
 
     if (node.right) {
-      Node.extractValues(node.right, result);
+      this.extractValues(node.right, result);
     }
 
     return result;
