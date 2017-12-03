@@ -16,22 +16,7 @@ class Node {
   }
 
   defaultComparator(a, b) {
-    return a < b;
-  }
-
-  extractValues(node, result) {
-    node = node || this;
-    result = result || [];
-    result.push(node.value);
-    if (node.left) {
-      this.extractValues(node.left, result);
-    }
-
-    if (node.right) {
-      this.extractValues(node.right, result);
-    }
-
-    return result;
+    return a.value < b.value;
   }
 }
 

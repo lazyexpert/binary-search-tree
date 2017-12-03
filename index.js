@@ -14,24 +14,37 @@ class BinarySearchTree {
       this.head = new Node(value);
       return;
     }
+    const newNode = new Node(value);
 
-    const allNodes = Node.extractValues(this.head);
+    const allNodes = (this._extractValues(this.head)).concat(newNode);
     const comparator = this.comparator || Node.prototype.defaultComparator;
     const sorted = mergeSort(allNodes, comparator);
     
     const middle = (sorted.length / 2) | 0;
     this.head = sorted[middle];
-    const left = sorted.slice(0, middle - 1);
-    const right = sorted.slice(middle + 1, sorted.length);
+    const filteredNodes = sorted.filter(el => el.value !== this.head.value);
 
-    const comparator = this.comparator || Node.prototype.defaultComparator;
-
-    this._addNodeToBalancedTree(left, this.head, comparator)
-    this._addNodeToBalancedTree(right, this.head, comparator)
+    this._divideTreeAndContinue(filteredNodes, middle, this.head, comparator);
   }
 
   hasValue(value) {
 
+  }
+
+  _extractValues(node, result) {
+    node = node || this.head;
+    result = result || [];
+    const left = node.left;
+    const right = node.right;
+    node.left = null;
+    node.right = null;
+
+    result.push(node);
+
+    left && this._extractValues(left, result);
+    right && this._extractValues(right, result);
+
+    return result;
   }
 
   _addNodeToBalancedTree(nodesArray, currentNode, comparator) {
@@ -46,16 +59,21 @@ class BinarySearchTree {
     const middle = (nodesArray.length / 2) | 0;
     const processingNode = nodesArray[middle];
     this._assignNewNode(processingNode, currentNode, comparator);
-    
-    const left = nodesArray.slice(0, middle - 1);
-    const right = nodesArray.slice(middle + 1, nodesArray.length);
+    const filteredNodes = nodesArray.filter(el => el.value !== processingNode.value);
+
+    this._divideTreeAndContinue(filteredNodes, middle, processingNode, comparator);
+  }
+
+  _divideTreeAndContinue(nodes, middle, processingNode, comparator) {
+    const left = nodes.slice(0, middle);
+    const right = nodes.slice(middle, nodes.length);
 
     this._addNodeToBalancedTree(left, processingNode, comparator);
-    this._addNodeToBalancedTree(right, processingNode, comparator);
+    this._addNodeToBalancedTree(right, processingNode, comparator);    
   }
 
   _assignNewNode(node, currentNode, comparator) {
-    if (comparator(node.value, currentNode.value)) {
+    if (comparator(node, currentNode)) {
       currentNode.left = node;
     } else {
       currentNode.right = node;
