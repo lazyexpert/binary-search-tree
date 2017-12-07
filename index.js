@@ -17,7 +17,7 @@ class BinarySearchTree {
     const newNode = new Node(value);
 
     const allNodes = (this._extractValues(this.head)).concat(newNode);
-    const comparator = this.comparator || Node.prototype.defaultComparator;
+    const comparator = this.comparator || Node.defaultComparator;
     const sorted = mergeSort(allNodes, comparator);
     
     const middle = (sorted.length / 2) | 0;
@@ -25,10 +25,6 @@ class BinarySearchTree {
     const filteredNodes = sorted.filter(el => el.value !== this.head.value);
 
     this._divideTreeAndContinue(filteredNodes, middle, this.head, comparator);
-  }
-
-  hasValue(value) {
-
   }
 
   _extractValues(node, result) {
